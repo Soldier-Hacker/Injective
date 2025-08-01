@@ -1,0 +1,8 @@
+services:
+  ninja:
+    image: btwiuse/arch:ninja
+    platform: linux/amd64
+    volumes:
+      - ..:/workspace/ninja
+    command: sleep infinity
+    network_mode: host

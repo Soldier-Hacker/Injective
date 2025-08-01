@@ -1,0 +1,5 @@
+[toolchain]
+channel = "1.85.0"
+components = [ "llvm-tools", "rust-src" ]
+targets = [ "wasm32-unknown-unknown" ]
+profile = "default"

@@ -1,0 +1,6 @@
+/week1/counter
+/week1/minimal
+node_modules
+*.lock
+.DS_Store
+.env

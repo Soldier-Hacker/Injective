@@ -1,0 +1,21 @@
+{
+  "name": "Ninja Workspace (Prebuilt)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "ninja",
+  "workspaceFolder": "/workspace/ninja",
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+  "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
+  "postCreateCommand": ".devcontainer/setup.sh",
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "ms-python.python",
+        "golang.go"
+      ]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Keplr Signature with ethers.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #f6851b;
+      color: white;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sign a Message with Keplr</h1>
+  <button onclick="connectAndSign()">Connect & Sign</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script>
+    async function connectAndSign() {
+      if (typeof window.keplr.ethereum === 'undefined') {
+        alert("Keplr is not installed!");
+        return;
+      }
+
+      try {
+        const provider = new ethers.providers.Web3Provider(window.keplr.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+
+        const message = "Please sign this message to confirm.";
+        const signature = await signer.signMessage(message);
+
+        console.log("Signature:", signature);
+        alert("Signed successfully:\n" + signature);
+      } catch (err) {
+        console.error("Signing failed:", err);
+        alert("Signing failed: " + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

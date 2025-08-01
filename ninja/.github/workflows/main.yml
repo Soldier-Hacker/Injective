@@ -1,0 +1,38 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+ 
+      - name: Run setup script
+        run: env CI=1 bash .devcontainer/setup.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Build week1/minimal
+        run: bash -x week1/minimal_build.sh
+
+      - name: Build week1/counter
+        run: bash -x week1/counter_build.sh
+
+      - name: Upload matching files
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-release
+          path: |
+            week1/minimal/schema/**
+            week1/minimal/artifacts/**
+            week1/counter/schema/**
+            week1/counter/artifacts/**
+
+      - name: Deploy counter
+        run: bash week1/counter_deploy.sh
